@@ -7,15 +7,6 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.36-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 
-**A production-grade ML system that predicts trading signals for top NSE stocks using XGBoost and a volatility-based Market Regime Filter.**
-
-[🚀 Live Demo](YOUR_DEPLOYED_APP_LINK) · [📂 Repository](YOUR_GITHUB_REPO_LINK) · [📄 Report a Bug](YOUR_GITHUB_REPO_LINK/issues)
-
-![App Screenshot](YOUR_SCREENSHOT_LINK)
-
-</div>
-
----
 
 ## 🧠 About The Project
 
@@ -230,10 +221,10 @@ The app will open at `http://localhost:8501` in your browser.
 
 ## 👤 Author
 
-**YOUR_NAME**
-- LinkedIn: [YOUR_LINKEDIN_LINK]
-- GitHub: [@YOUR_GITHUB_USERNAME](YOUR_GITHUB_PROFILE_LINK)
-- Email: YOUR_EMAIL
+Sarthak Argade
+- LinkedIn: www.linkedin.com/in/sarthak-argade-144966390
+- GitHub: https://github.com/sarthakargade9166-max
+- Email: sarthakargade9166@gmail.com
 
 ---
 
