@@ -1,29 +1,11 @@
-# requirements.txt
-# NSE Algorithmic Trading & Market Regime Filter
-# Install all dependencies with: pip install -r requirements.txt
-
-# ── Data & ML Core ────────────────────────────────────────────
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.5.1
-xgboost==2.0.3
-joblib==1.4.2
-
-# ── Data Fetching ─────────────────────────────────────────────
-yfinance==0.2.40
-
-# ── Web App ───────────────────────────────────────────────────
-streamlit==1.36.0
-
-# ── Visualization ─────────────────────────────────────────────
-plotly==5.22.0
-matplotlib==3.9.1
-seaborn==0.13.2
-
-# ── Database ──────────────────────────────────────────────────
-# SQLite is built into Python (no install needed)
-# Uncomment below for PostgreSQL (Supabase / Render):
-# psycopg2-binary==2.9.9
-
-# ── Utilities ─────────────────────────────────────────────────
-python-dotenv==1.0.1   # For loading .env environment variables
+pandas
+numpy
+scikit-learn
+xgboost
+joblib
+yfinance
+streamlit
+plotly
+matplotlib
+seaborn
+python-dotenv
