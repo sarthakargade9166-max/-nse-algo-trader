@@ -30,9 +30,7 @@ from src.model_trainer import train_xgboost_model, load_model, predict_signal
 from src.database import init_db, log_prediction, get_trade_log
 from src.visualizer import plot_price_with_signals, plot_regime, plot_feature_importance
 
-# ─────────────────────────────────────────────
-# CUSTOM CSS — Dark Trading Terminal Aesthetic
-# ─────────────────────────────────────────────
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;600&display=swap');
@@ -73,9 +71,7 @@ div[data-testid="stSidebarContent"] {
 """, unsafe_allow_html=True)
 
 
-# ─────────────────────────────────────────────
-# SIDEBAR — Configuration Panel
-# ─────────────────────────────────────────────
+
 with st.sidebar:
     st.markdown("## ⚙️ Configuration")
     st.markdown("---")
@@ -115,9 +111,7 @@ with st.sidebar:
     run_btn = st.button("🚀 Run Analysis", use_container_width=True, type="primary")
 
 
-# ─────────────────────────────────────────────
-# HEADER
-# ─────────────────────────────────────────────
+#header
 st.markdown("""
 <div style='padding: 10px 0 20px 0;'>
   <span style='font-family: Space Mono, monospace; font-size:1.8rem; font-weight:700; color:#e2e8f0;'>
@@ -217,7 +211,7 @@ if run_btn:
     fig_price = plot_price_with_signals(regime_df, selected_stock_name, y_pred, X_test)
     st.plotly_chart(fig_price, use_container_width=True)
 
-    # ─── REGIME + FEATURES ───
+    # ─── REGIME ans FEATURES ───
     col_left, col_right = st.columns([1, 1])
     with col_left:
         st.markdown("### 🌡️ Market Regime Classification")
@@ -263,7 +257,7 @@ if run_btn:
     st.caption(f"Data Source: Yahoo Finance (NSE) · Model: XGBoost · Last Updated: {datetime.now().strftime('%d %b %Y %H:%M IST')}")
 
 else:
-    # Landing state
+  
     st.markdown("""
     <div style='text-align:center; padding: 80px 20px;'>
         <div style='font-size:4rem;'>📈</div>
