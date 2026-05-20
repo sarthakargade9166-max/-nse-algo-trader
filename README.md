@@ -1,4 +1,4 @@
-# 📈 NSE Algorithmic Trading & Market Regime Filter
+#  NSE Algorithmic Trading & Market Regime Filter
 
 <div align="center">
 
@@ -8,7 +8,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 
 
-## 🧠 About The Project
+##  About The Project
 
 This project builds a **data-driven, ML-powered trading signal system** for Indian equities listed on the NSE. It goes beyond simple technical analysis by using a two-layer decision system:
 
@@ -16,26 +16,26 @@ This project builds a **data-driven, ML-powered trading signal system** for Indi
 
 2. **XGBoost Signal Engine** — A gradient-boosted ML classifier trained on **26 engineered features** (momentum, trend, volatility, and volume indicators) to predict the next 1/3/5-day price direction.
 
-> ⚠️ **Disclaimer**: This project is built for educational and portfolio purposes only. It does not constitute financial advice. Never trade real money based solely on ML model outputs.
+>  **Disclaimer**: This project is built for educational and portfolio purposes only. It does not constitute financial advice. Never trade real money based solely on ML model outputs.
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 | Feature | Description |
 |---|---|
-| 🤖 **XGBoost Classifier** | Gradient boosted trees trained on 26 technical features |
-| 🌡️ **Market Regime Filter** | ADX + SMA-based Bullish/Bearish/Sideways classification |
-| 📊 **26 Technical Features** | RSI, MACD, Bollinger Bands, ATR, Stochastic, OBV, and more |
-| 🕯️ **Interactive Charts** | Plotly candlestick + signal overlay + volume charts |
-| 🗃️ **SQL Trade Logging** | Every signal logged to SQLite (upgradeable to PostgreSQL) |
-| 📋 **Model Report Card** | Accuracy, Precision, Recall, F1, ROC-AUC benchmarked |
-| 🔒 **No Data Leakage** | Time-series aware train/test split (never shuffled) |
-| 🚀 **Streamlit UI** | One-click analysis for any of 8 major NSE stocks |
+|  **XGBoost Classifier** | Gradient boosted trees trained on 26 technical features |
+|  **Market Regime Filter** | ADX + SMA-based Bullish/Bearish/Sideways classification |
+|  **26 Technical Features** | RSI, MACD, Bollinger Bands, ATR, Stochastic, OBV, and more |
+|  **Interactive Charts** | Plotly candlestick + signal overlay + volume charts |
+|  **SQL Trade Logging** | Every signal logged to SQLite (upgradeable to PostgreSQL) |
+|  **Model Report Card** | Accuracy, Precision, Recall, F1, ROC-AUC benchmarked |
+|  **No Data Leakage** | Time-series aware train/test split (never shuffled) |
+|  **Streamlit UI** | One-click analysis for any of 8 major NSE stocks |
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -67,7 +67,7 @@ This project builds a **data-driven, ML-powered trading signal system** for Indi
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Language**: Python 3.11+
 - **ML Model**: XGBoost (gradient boosted decision trees)
@@ -81,7 +81,7 @@ This project builds a **data-driven, ML-powered trading signal system** for Indi
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 nse-algo-trader/
@@ -113,7 +113,7 @@ nse-algo-trader/
 
 ---
 
-## 🚀 How to Run Locally
+## How to Run Locally
 
 ### Prerequisites
 - Python 3.11 or higher
@@ -159,7 +159,7 @@ The app will open at `http://localhost:8501` in your browser.
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
 ### Streamlit Community Cloud (Free, Recommended)
 1. Push code to a public GitHub repo
@@ -169,7 +169,7 @@ The app will open at `http://localhost:8501` in your browser.
    ```toml
    DATABASE_URL = "YOUR_SUPABASE_POSTGRESQL_URL"
    ```
-5. Deploy — your live link will be: `YOUR_DEPLOYED_APP_LINK`
+
 
 ### Hugging Face Spaces (Alternative)
 1. Create a new Space at [huggingface.co/spaces](https://huggingface.co/spaces)
@@ -194,7 +194,7 @@ The app will open at `http://localhost:8501` in your browser.
 
 ---
 
-## 🔬 Features Engineered (26 Total)
+##  Features Engineered (26 Total)
 
 | Category | Indicators |
 |---|---|
@@ -208,7 +208,7 @@ The app will open at `http://localhost:8501` in your browser.
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Add Backtesting Engine with P&L simulation
 - [ ] Add NIFTY 50 Index support
@@ -219,7 +219,7 @@ The app will open at `http://localhost:8501` in your browser.
 
 ---
 
-## 👤 Author
+##  Author
 
 Sarthak Argade
 - LinkedIn: www.linkedin.com/in/sarthak-argade-144966390
@@ -231,10 +231,6 @@ Sarthak Argade
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 🙏 Acknowledgments
 
 - [Yahoo Finance](https://finance.yahoo.com) for free market data via `yfinance`
 - [XGBoost Documentation](https://xgboost.readthedocs.io/)
