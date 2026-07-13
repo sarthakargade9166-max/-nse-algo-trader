@@ -1,13 +1,3 @@
-"""
-src/feature_engineer.py
-========================
-Converts raw OHLCV price data into ML-ready features using
-20+ technical indicators. These indicators are the "vocabulary"
-our XGBoost model reads to make predictions.
-
-Beginner Tip: Think of features as clues the model uses to decide
-              whether to BUY, HOLD, or SELL tomorrow.
-"""
 
 import pandas as pd
 import numpy as np
@@ -25,10 +15,8 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     data = df.copy()
 
-    # ─── 1. TREND INDICATORS ───────────────────────────────────────────────
-    # Simple Moving Averages — the most basic trend-following tools
-    # SMA_20: average closing price over last 20 days (short-term trend)
-    # SMA_50: average closing price over last 50 days (medium-term trend)
+    # 1. TREND INDICATORS
+ 
     data["SMA_20"]  = data["Close"].rolling(window=20).mean()
     data["SMA_50"]  = data["Close"].rolling(window=50).mean()
     data["SMA_200"] = data["Close"].rolling(window=200).mean()
@@ -37,19 +25,19 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     data["EMA_12"] = data["Close"].ewm(span=12, adjust=False).mean()
     data["EMA_26"] = data["Close"].ewm(span=26, adjust=False).mean()
 
-    # Price relative to moving averages (normalized distance)
+    # Price relative to moving averages 
     data["Price_to_SMA20"] = (data["Close"] - data["SMA_20"]) / data["SMA_20"]
     data["Price_to_SMA50"] = (data["Close"] - data["SMA_50"]) / data["SMA_50"]
     data["SMA20_SMA50_cross"] = data["SMA_20"] - data["SMA_50"]  # Golden/Death cross signal
 
-    # ─── 2. MACD (Moving Average Convergence Divergence) ──────────────────
-    # MACD = EMA_12 - EMA_26 → positive means short-term momentum is up
+    # 2. MACD
+    
     data["MACD"]        = data["EMA_12"] - data["EMA_26"]
     data["MACD_Signal"] = data["MACD"].ewm(span=9, adjust=False).mean()
     data["MACD_Hist"]   = data["MACD"] - data["MACD_Signal"]  # Histogram = momentum of MACD
 
-    # ─── 3. RSI (Relative Strength Index) — Momentum Oscillator ──────────
-    # RSI ranges 0–100: >70 = overbought (potential sell), <30 = oversold (potential buy)
+    #  3. RSI 
+    
     delta  = data["Close"].diff()
     gain   = delta.clip(lower=0)
     loss   = -delta.clip(upper=0)
@@ -58,29 +46,28 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     rs     = avg_g / (avg_l + 1e-10)            # 1e-10 prevents division by zero
     data["RSI_14"] = 100 - (100 / (1 + rs))
 
-    # ─── 4. BOLLINGER BANDS — Volatility Channel ──────────────────────────
-    # Bands expand in high volatility and contract in low volatility
+    # 4. BOLLINGER BANDS — Volatility Channel 
+ 
     rolling_std       = data["Close"].rolling(window=20).std()
     data["BB_Upper"]  = data["SMA_20"] + (2 * rolling_std)
     data["BB_Lower"]  = data["SMA_20"] - (2 * rolling_std)
     data["BB_Width"]  = (data["BB_Upper"] - data["BB_Lower"]) / data["SMA_20"]  # Normalized width
     data["BB_Pct"]    = (data["Close"] - data["BB_Lower"]) / (data["BB_Upper"] - data["BB_Lower"] + 1e-10)
 
-    # ─── 5. ATR (Average True Range) — Volatility Measure ────────────────
-    # Measures how much a stock moves on average; used for stop-loss sizing
+    # ─── 5. ATR (Average True Range) 
     high_low   = data["High"] - data["Low"]
     high_close = (data["High"] - data["Close"].shift()).abs()
     low_close  = (data["Low"]  - data["Close"].shift()).abs()
     true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
     data["ATR_14"] = true_range.ewm(com=13, adjust=False).mean()
-    data["ATR_Pct"] = data["ATR_14"] / data["Close"]  # Normalized ATR
+    data["ATR_Pct"] = data["ATR_14"] / data["Close"]  #
 
-    # ─── 6. VOLUME INDICATORS ─────────────────────────────────────────────
+    # ─── 6. VOLUME INDICATORS 
     data["Volume_SMA20"]    = data["Volume"].rolling(window=20).mean()
     data["Volume_Ratio"]    = data["Volume"] / (data["Volume_SMA20"] + 1e-10)  # >1 = high volume day
     data["OBV"]             = (np.sign(data["Close"].diff()) * data["Volume"]).cumsum()  # On-Balance Volume
 
-    # ─── 7. PRICE ACTION / MOMENTUM ───────────────────────────────────────
+    # ─── 7. PRICE ACTION / MOMENTUM 
     data["Return_1d"]  = data["Close"].pct_change(1)   # 1-day return
     data["Return_5d"]  = data["Close"].pct_change(5)   # 5-day return (1 week)
     data["Return_20d"] = data["Close"].pct_change(20)  # 20-day return (1 month)
