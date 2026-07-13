@@ -1,11 +1,3 @@
-"""
-NSE Algorithmic Trading & Market Regime Filter
-================================================
-Main Streamlit Application Entry Point
-Author: YOUR_NAME
-GitHub: YOUR_GITHUB_REPO_LINK
-Live App: YOUR_DEPLOYED_APP_LINK
-"""
 
 import streamlit as st
 st.set_page_config(
