@@ -1,32 +1,9 @@
-"""
-src/database.py
-================
-Handles all database operations using SQLite (local) or PostgreSQL (cloud).
-
-Why log trades to a database?
-    1. Audit Trail — Record every signal the system generates
-    2. Backtesting Evaluation — Compare signals to actual outcomes later
-    3. Recruiter Proof — Shows you can integrate SQL into a data pipeline
-
-LOCAL DEVELOPMENT: Uses SQLite (no setup required, file-based)
-PRODUCTION:        Replace SQLite with PostgreSQL (Supabase or Render)
-                   Just change DATABASE_URL in your .env file!
-
-Beginner Tip:
-    SQLite is a "serverless" database — just a single .db file.
-    Perfect for local development. In production, switch to PostgreSQL
-    for scalability and concurrent access.
-"""
-
 import sqlite3
 import pandas as pd
 import os
 from datetime import datetime
 
-# ─── Database Configuration ───────────────────────────────────────────────────
-# LOCAL:      Uses SQLite file in /data folder
-# PRODUCTION: Set DATABASE_URL env variable to your PostgreSQL connection string
-#             e.g., postgresql://user:password@host:5432/dbname (from Supabase/Render)
+
 DATABASE_URL = os.getenv("DATABASE_URL", "data/trade_log.db")
 
 # Check if using PostgreSQL (production) or SQLite (local development)
