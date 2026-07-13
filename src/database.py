@@ -6,7 +6,6 @@ from datetime import datetime
 
 DATABASE_URL = os.getenv("DATABASE_URL", "data/trade_log.db")
 
-# Check if using PostgreSQL (production) or SQLite (local development)
 USE_POSTGRES = DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")
 
 
