@@ -1,14 +1,3 @@
-"""
-src/visualizer.py
-==================
-All chart-building functions for the Streamlit dashboard.
-Uses Plotly for interactive, professional-looking charts.
-
-Beginner Tip:
-    Plotly charts are "interactive" — users can hover, zoom, and pan.
-    This is much better than Matplotlib for web apps.
-"""
-
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
