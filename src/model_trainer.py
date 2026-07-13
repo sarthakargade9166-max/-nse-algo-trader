@@ -1,25 +1,3 @@
-"""
-src/model_trainer.py
-=====================
-Trains an XGBoost classifier to predict the direction of stock price movement.
-
-What it predicts:
-    Label  1 → BUY  (price will go UP in N days)
-    Label  0 → HOLD (price will stay flat)
-    Label -1 → SELL (price will go DOWN in N days)
-
-Beginner Tip:
-    We're solving a CLASSIFICATION problem (not regression).
-    Instead of predicting the exact price, we predict the direction.
-    This is more robust for trading because direction is easier to get right.
-
-XGBoost vs Random Forest:
-    • Both are "ensemble" models (many decision trees working together)
-    • XGBoost trains trees SEQUENTIALLY — each tree fixes the previous one's mistakes
-    • Random Forest trains trees in PARALLEL — averages their votes
-    • XGBoost is generally more accurate but needs more careful tuning
-"""
-
 import numpy as np
 import pandas as pd
 import joblib
@@ -110,22 +88,22 @@ def train_xgboost_model(
     inv_label_map = {0: -1, 1: 0, 2: 1}
     y_encoded    = y.map(label_map)
 
-    # ─── Step 2: Time-Series Train/Test Split ────────────────────────────
+    # step 2: Time-Series Train/Test Split
     split_idx = int(len(X) * (1 - test_size))
     X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
     y_train, y_test = y_encoded.iloc[:split_idx], y_encoded.iloc[split_idx:]
 
-    # ─── Step 3: Train XGBoost ────────────────────────────────────────────
+    # ─── Step 3: Train XGBoost
     model = XGBClassifier(
         n_estimators      = n_estimators,
         max_depth         = max_depth,
-        learning_rate     = 0.05,         # Small LR → slower but more accurate
-        subsample         = 0.8,          # Use 80% of rows per tree (prevents overfitting)
-        colsample_bytree  = 0.8,          # Use 80% of features per tree
+        learning_rate     = 0.05,         
+        subsample         = 0.8,          
+        colsample_bytree  = 0.8,          
         use_label_encoder = False,
-        eval_metric       = "mlogloss",   # Multi-class log loss
+        eval_metric       = "mlogloss",   
         random_state      = 42,
-        n_jobs            = -1            # Use all CPU cores
+        n_jobs            = -1           
     )
 
     model.fit(
@@ -134,11 +112,9 @@ def train_xgboost_model(
         verbose=False
     )
 
-    # ─── Step 4: Evaluate ────────────────────────────────────────────────
+    # Step 4: Evaluate 
     y_pred_encoded = model.predict(X_test)
     y_pred_proba   = model.predict_proba(X_test)
-
-    # Map back to original labels for reporting
     y_pred = np.array([inv_label_map[p] for p in y_pred_encoded])
     y_test_orig = np.array([inv_label_map[p] for p in y_test])
 
@@ -151,7 +127,7 @@ def train_xgboost_model(
         "report":    classification_report(y_test_orig, y_pred, target_names=["SELL", "HOLD", "BUY"], zero_division=0)
     }
 
-    # ─── Step 5: Save Model ───────────────────────────────────────────────
+    #  Step 5: Save Model 
     os.makedirs("models", exist_ok=True)
     joblib.dump({"model": model, "features": available_features, "label_map": inv_label_map}, MODEL_PATH)
 
@@ -172,7 +148,7 @@ def predict_signal(model, features: pd.DataFrame, feature_cols: list) -> int:
     Returns:
         int: 1 (BUY), 0 (HOLD), or -1 (SELL)
     """
-    X = features[feature_cols].iloc[[-1]]  # Latest row only
+    X = features[feature_cols].iloc[[-1]]  
     raw_pred = model.predict(X)[0]
     inv_map  = {0: -1, 1: 0, 2: 1}
     return inv_map.get(raw_pred, 0)
