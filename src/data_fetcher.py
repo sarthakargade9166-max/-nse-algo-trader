@@ -1,10 +1,3 @@
-"""
-src/data_fetcher.py
-====================
-Fetches historical OHLCV data for NSE stocks using yfinance.
-Beginner Note: OHLCV = Open, High, Low, Close, Volume — the 5 core price columns
-               that every trading system is built on.
-"""
 
 import yfinance as yf
 import pandas as pd
