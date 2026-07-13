@@ -1,22 +1,3 @@
-"""
-src/regime_filter.py
-=====================
-Classifies market conditions into 3 regimes:
-  • Bullish  — Trending upward, good for BUY signals
-  • Bearish  — Trending downward, good for SELL signals
-  • Sideways — Choppy/ranging, signals are unreliable → FILTER OUT
-
-Beginner Tip: The regime filter is the "risk manager" of the system.
-              Even if the ML model says BUY, we might ignore it if
-              the market is in a Bearish or Sideways regime.
-              
-Why ATR + ADX?
-  - ATR  (Average True Range) tells us HOW MUCH price is moving (volatility)
-  - ADX  (Average Directional Index) tells us WHETHER it's TRENDING (direction strength)
-  - Together: high ADX + rising price = Bullish, high ADX + falling price = Bearish,
-              low ADX = Sideways/ranging market
-"""
-
 import pandas as pd
 import numpy as np
 
@@ -38,7 +19,7 @@ def compute_adx(df: pd.DataFrame, period: int = 14) -> pd.Series:
     low   = df["Low"]
     close = df["Close"]
 
-    # +DM: Positive Directional Movement (upward movement)
+    # +DM: Positive Directional Movement 
     plus_dm  = high.diff()
     minus_dm = -low.diff()
 
@@ -55,7 +36,7 @@ def compute_adx(df: pd.DataFrame, period: int = 14) -> pd.Series:
         (low  - close.shift()).abs()
     ], axis=1).max(axis=1)
 
-    # Smoothed ATR and Directional Movements (using Wilder's smoothing)
+    # Smoothed ATR and Directional Movements 
     atr_s      = tr.ewm(alpha=1 / period, adjust=False).mean()
     plus_di    = 100 * plus_dm.ewm(alpha=1 / period, adjust=False).mean() / (atr_s + 1e-10)
     minus_di   = 100 * minus_dm.ewm(alpha=1 / period, adjust=False).mean() / (atr_s + 1e-10)
@@ -87,7 +68,7 @@ def classify_market_regime(df: pd.DataFrame) -> pd.DataFrame:
     # Compute ADX if not already present
     data["ADX"] = compute_adx(data)
 
-    # Compute SMA_50 if not present (it should be, but defensive check)
+  
     if "SMA_50" not in data.columns:
         data["SMA_50"] = data["Close"].rolling(window=50).mean()
 
@@ -99,11 +80,10 @@ def classify_market_regime(df: pd.DataFrame) -> pd.DataFrame:
     choices = ["Bullish", "Bearish"]
     data["Regime"] = np.select(conditions, choices, default="Sideways")
 
-    # ─── Regime Confidence Score (0–100) ──────────────────────────────────
-    # Higher ADX = higher confidence in the regime label
+    # Regime Confidence Scoree
     data["Regime_Confidence"] = data["ADX"].clip(upper=60) / 60 * 100
 
-    # ─── Regime Numeric (for ML features) ────────────────────────────────
+    # regime Numeric (for ML features) 
     regime_map = {"Bullish": 1, "Sideways": 0, "Bearish": -1}
     data["Regime_Num"] = data["Regime"].map(regime_map)
 
