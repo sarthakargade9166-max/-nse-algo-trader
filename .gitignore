@@ -1,6 +1,4 @@
-# .gitignore — Files that should NOT be pushed to GitHub
 
-# Environment variables (contains secrets!)
 .env
 
 # Python cache
@@ -14,15 +12,12 @@ venv/
 .venv/
 env/
 
-# Jupyter Notebooks checkpoints
-.ipynb_checkpoints/
-
 # Database files (local SQLite)
 data/*.db
 data/raw/
 data/processed/
 
-# Trained model files (can be large)
+# Trained model files
 models/*.pkl
 models/*.json
 
